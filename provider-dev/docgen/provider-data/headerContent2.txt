@@ -4,10 +4,10 @@ See also:
 
 ## Installation
 
-To pull the latest version of the `REPLACEME` provider, run the following command:  
+To pull the latest version of the `sumologic` provider, run the following command:  
 
 ```bash
-REGISTRY PULL REPLACEME;
+REGISTRY PULL sumologic;
 ```
 > To view previous provider versions or to pull a specific provider version, see [here](https://stackql.io/docs/language-spec/registry).  
 
@@ -15,7 +15,8 @@ REGISTRY PULL REPLACEME;
 
 The following system environment variables are used for authentication by default:  
 
-- <CopyableCode code="REPLACEME" /> - REPLACEME API token (see <a href="REPLACEME>How to Create a Personal Access Token</a>)
+- <CopyableCode code="SUMOLOGIC_ACCESSID" /> - SumoLogic Access ID (see <a href="https://help.sumologic.com/docs/manage/security/access-keys/">Generating an Access Key</a>)
+- <CopyableCode code="SUMOLOGIC_ACCESSKEY" /> - SumoLogic Access Key (see <a href="https://help.sumologic.com/docs/manage/security/access-keys/">Generating an Access Key</a>)
   
 These variables are sourced at runtime (from the local machine or as CI variables/secrets).  
 
@@ -27,7 +28,7 @@ To use different environment variables (instead of the defaults), use the `--aut
 
 ```bash
 
-AUTH='{ "REPLACEME": { "type": "bearer",  "credentialsenvvar": "REPLACEME" }}'
+AUTH='{ "sumologic": { "type": "basic",  "username_var": "YOUR_SUMOLOGIC_ACCESS_ID_VAR", "password_var": "YOUR_SUMOLOGIC_ACCESS_KEY_VAR" }}'
 stackql shell --auth="${AUTH}"
 
 ```
@@ -35,8 +36,18 @@ or using PowerShell:
 
 ```powershell
 
-$Auth = "{ 'REPLACEME': { 'type': 'bearer',  'credentialsenvvar': 'REPLACEME' }}"
+$Auth = "{ 'sumologic': { 'type': 'basic',  'username_var': 'YOUR_SUMOLOGIC_ACCESS_ID_VAR', 'password_var': 'YOUR_SUMOLOGIC_ACCESS_KEY_VAR' }}"
 stackql.exe shell --auth=$Auth
 
 ```
 </details>
+
+
+## Server Parameters
+
+
+The following parameter is required for the `sumologic` provider if you are not using the `us2` region:  
+
+- <CopyableCode code="region" /> - The SumoLogic regional endpoint (e.g. <code>au</code>, <code>ca</code>, <code>de</code>, <code>eu</code>, <code>fed</code>, <code>in</code>, <code>jp</code>)
+
+This parameter would be supplied to the `WHERE` clause of each `SELECT` statement if you are not usign the `us2` region.
